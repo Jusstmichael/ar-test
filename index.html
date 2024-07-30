@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,15 +7,59 @@
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
     <style>
-        body { margin: 0; }
+        #splash {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            margin: auto;
+        }
+        .loading {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: .25rem solid rgba(255, 255, 255, .2);
+            border-top-color: #fff;
+            animation: spin 1s infinite linear;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
-<body>
-    <a-scene embedded arjs>
-        <a-marker type="pattern" url="assets/marker.patt">
-            <a-entity gltf-model="assets/bowl.glb" scale="0.5 0.5 0.5"></a-entity>
+<body style="margin: 0; overflow: hidden;">
+    <div id="splash">
+        <div class="loading"></div>
+    </div>
+    <a-scene embedded arjs='sourceType: webcam;'>
+        <a-marker preset="hiro">
+            <a-entity gltf-model="bowl.glb" scale="0.5 0.5 0.5"></a-entity>
         </a-marker>
         <a-entity camera></a-entity>
     </a-scene>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('splash').style.display = 'none';
+
+            // Request fullscreen
+            const scene = document.querySelector('a-scene');
+            if (scene.requestFullscreen) {
+                scene.requestFullscreen();
+            } else if (scene.mozRequestFullScreen) { /* Firefox */
+                scene.mozRequestFullScreen();
+            } else if (scene.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+                scene.webkitRequestFullscreen();
+            } else if (scene.msRequestFullscreen) { /* IE/Edge */
+                scene.msRequestFullscreen();
+            }
+        });
+    </script>
 </body>
 </html>
