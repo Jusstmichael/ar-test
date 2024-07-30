@@ -11,7 +11,7 @@
 </head>
 <body>
   <div id="ar-container">
-    <a-scene embedded arjs="debugUIEnabled: false;" vr-mode-ui="enabled: false" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" vr-mode-ui="enabled: false" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
       <a-marker preset="hiro">
         <a-entity gltf-model="url(models/bowl.glb)" scale="5 5 5"></a-entity>
       </a-marker>
@@ -21,31 +21,18 @@
 
   <script>
     // Request full-screen mode automatically on page load
-    document.documentElement.requestFullscreen = document.documentElement.requestFullscreen || 
-                                                 document.documentElement.mozRequestFullScreen || 
-                                                 document.documentElement.webkitRequestFullscreen || 
-                                                 document.documentElement.msRequestFullscreen;
-
-    document.exitFullscreen = document.exitFullscreen || 
-                              document.mozCancelFullScreen || 
-                              document.webkitExitFullscreen || 
-                              document.msExitFullscreen;
-
     function enterFullScreen() {
-      if (document.documentElement.requestFullscreen) {
-        document.documentElement.requestFullscreen();
-      } else if (document.documentElement.mozRequestFullScreen) { // Firefox
-        document.documentElement.mozRequestFullScreen();
-      } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
-        document.documentElement.webkitRequestFullscreen();
-      } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
-        document.documentElement.msRequestFullscreen();
+      const docEl = document.documentElement;
+      const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+
+      if (requestFullScreen) {
+        requestFullScreen.call(docEl);
       }
     }
 
-    window.onload = function() {
+    window.addEventListener('load', function() {
       enterFullScreen();
-    };
+    });
   </script>
 </body>
 </html>
