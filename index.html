@@ -8,26 +8,21 @@
     body {
       margin: 0;
       overflow: hidden;
-    }
-    a-scene {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
       height: 100vh;
+      background-color: black;
     }
   </style>
 </head>
 <body>
-  <a-scene embedded arjs vr-mode-ui="enabled: false" renderer="logarithmicDepthBuffer: true;">
+  <a-scene embedded arjs vr-mode-ui="enabled: false">
     <a-marker preset='hiro'>
       <a-entity gltf-model="url(models/bowl.glb)" scale="0.5 0.5 0.5"></a-entity>
     </a-marker>
     <a-entity camera></a-entity>
   </a-scene>
   <script>
-    // Function to request full-screen mode
-    function enterFullScreen() {
+    // Function to enable immersive mode
+    function enableImmersiveMode() {
       const docEl = document.documentElement;
       if (docEl.requestFullscreen) {
         docEl.requestFullscreen().catch(console.log);
@@ -38,17 +33,28 @@
       } else if (docEl.msRequestFullscreen) { // IE/Edge
         docEl.msRequestFullscreen().catch(console.log);
       }
+      if (document.fullscreenEnabled || document.webkitFullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled) {
+        document.addEventListener('fullscreenchange', function () {
+          if (document.fullscreenElement) {
+            document.documentElement.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden';
+          } else {
+            document.documentElement.style.overflow = '';
+            document.body.style.overflow = '';
+          }
+        });
+      }
     }
 
-    // Attempt to request full-screen mode on page load
+    // Attempt to enable immersive mode on page load
     document.addEventListener('DOMContentLoaded', function () {
-      enterFullScreen();
+      enableImmersiveMode();
     });
 
-    // Enter full-screen when user interacts with the page
+    // Enter immersive mode when user interacts with the page
     document.addEventListener('click', function () {
       if (!document.fullscreenElement) {
-        enterFullScreen();
+        enableImmersiveMode();
       }
     });
   </script>
