@@ -23,18 +23,20 @@
     function enterFullScreen() {
       const docEl = document.documentElement;
       if (docEl.requestFullscreen) {
-        docEl.requestFullscreen();
+        docEl.requestFullscreen().catch(console.log);
       } else if (docEl.mozRequestFullScreen) { // Firefox
-        docEl.mozRequestFullScreen();
+        docEl.mozRequestFullScreen().catch(console.log);
       } else if (docEl.webkitRequestFullScreen) { // Chrome, Safari and Opera
-        docEl.webkitRequestFullScreen();
+        docEl.webkitRequestFullScreen().catch(console.log);
       } else if (docEl.msRequestFullscreen) { // IE/Edge
-        docEl.msRequestFullscreen();
+        docEl.msRequestFullscreen().catch(console.log);
       }
     }
 
-    // Request full-screen mode when the page loads
-    window.onload = enterFullScreen;
+    // Attempt to request full-screen mode on page load
+    document.addEventListener('DOMContentLoaded', function () {
+      enterFullScreen();
+    });
 
     // Enter full-screen when user interacts with the page
     document.addEventListener('click', function () {
