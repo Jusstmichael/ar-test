@@ -19,13 +19,27 @@
     <a-entity camera></a-entity>
   </a-scene>
   <script>
-    // Request full-screen mode
-    document.documentElement.requestFullscreen().catch(console.log);
+    // Function to request full-screen mode
+    function enterFullScreen() {
+      const docEl = document.documentElement;
+      if (docEl.requestFullscreen) {
+        docEl.requestFullscreen();
+      } else if (docEl.mozRequestFullScreen) { // Firefox
+        docEl.mozRequestFullScreen();
+      } else if (docEl.webkitRequestFullScreen) { // Chrome, Safari and Opera
+        docEl.webkitRequestFullScreen();
+      } else if (docEl.msRequestFullscreen) { // IE/Edge
+        docEl.msRequestFullscreen();
+      }
+    }
+
+    // Request full-screen mode when the page loads
+    window.onload = enterFullScreen;
 
     // Enter full-screen when user interacts with the page
     document.addEventListener('click', function () {
       if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch(console.log);
+        enterFullScreen();
       }
     });
   </script>
