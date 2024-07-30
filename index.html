@@ -20,7 +20,7 @@
   </div>
 
   <script>
-    // Request full-screen mode
+    // Request full-screen mode automatically on page load
     document.documentElement.requestFullscreen = document.documentElement.requestFullscreen || 
                                                  document.documentElement.mozRequestFullScreen || 
                                                  document.documentElement.webkitRequestFullscreen || 
@@ -43,19 +43,9 @@
       }
     }
 
-    function exitFullScreen() {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document.mozCancelFullScreen) { // Firefox
-        document.mozCancelFullScreen();
-      } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
-        document.webkitExitFullscreen();
-      } else if (document.msExitFullscreen) { // IE/Edge
-        document.msExitFullscreen();
-      }
-    }
-
-    document.addEventListener('click', enterFullScreen);
+    window.onload = function() {
+      enterFullScreen();
+    };
   </script>
 </body>
 </html>
