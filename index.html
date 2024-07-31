@@ -87,11 +87,8 @@
       document.getElementById('splash-screen').style.display = 'none';
     }
 
-    // Event listener to request full-screen mode when the page loads
-    window.onload = enterFullScreen;
-
-    // Event listener to enter full-screen mode when the user clicks anywhere on the page
-    document.addEventListener('click', function () {
+    // Event listener to enter full-screen mode when the user clicks the splash screen
+    document.getElementById('splash-screen').addEventListener('click', function () {
       if (!document.fullscreenElement) {
         enterFullScreen();
       }
