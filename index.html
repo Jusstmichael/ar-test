@@ -14,5 +14,20 @@
     </a-marker>
     <a-entity camera></a-entity>
   </a-scene>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var scene = document.querySelector('a-scene');
+      if (scene && scene.requestFullscreen) {
+        scene.requestFullscreen();
+      } else if (scene && scene.mozRequestFullScreen) { // Firefox
+        scene.mozRequestFullScreen();
+      } else if (scene && scene.webkitRequestFullscreen) { // Chrome, Safari and Opera
+        scene.webkitRequestFullscreen();
+      } else if (scene && scene.msRequestFullscreen) { // IE/Edge
+        scene.msRequestFullscreen();
+      }
+    });
+  </script>
 </body>
 </html>
