@@ -1,33 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
   <title>AR.js with 3D Model</title>
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.7/aframe/build/aframe-ar.js"></script>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+  </style>
 </head>
-
-<body style='margin: 0; overflow: hidden;' onload="enterFullScreen();">
-  <a-scene embedded arjs>
+<body>
+  <a-scene embedded arjs vr-mode-ui="enabled: false">
     <a-marker preset='hiro'>
       <a-entity gltf-model="url(assets/bowl.glb)" scale="8 8 8"></a-entity>
     </a-marker>
     <a-entity camera></a-entity>
   </a-scene>
-  
   <script>
+    // Function to request full-screen mode
     function enterFullScreen() {
-      var scene = document.querySelector('a-scene');
-      if (scene.requestFullscreen) {
-        scene.requestFullscreen();
-      } else if (scene.mozRequestFullScreen) { // Firefox
-        scene.mozRequestFullScreen();
-      } else if (scene.webkitRequestFullscreen) { // Chrome, Safari and Opera
-        scene.webkitRequestFullscreen();
-      } else if (scene.msRequestFullscreen) { // IE/Edge
-        scene.msRequestFullscreen();
+      const docEl = document.documentElement;
+      if (docEl.requestFullscreen) {
+        docEl.requestFullscreen();
+      } else if (docEl.mozRequestFullScreen) { // Firefox
+        docEl.mozRequestFullScreen();
+      } else if (docEl.webkitRequestFullScreen) { // Chrome, Safari and Opera
+        docEl.webkitRequestFullScreen();
+      } else if (docEl.msRequestFullscreen) { // IE/Edge
+        docEl.msRequestFullscreen();
       }
     }
+
+    // Request full-screen mode when the page loads
+    window.onload = enterFullScreen;
+
+    // Enter full-screen when user interacts with the page
+    document.addEventListener('click', function () {
+      if (!document.fullscreenElement) {
+        enterFullScreen();
+      }
+    });
   </script>
 </body>
 </html>
