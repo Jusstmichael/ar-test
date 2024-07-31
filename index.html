@@ -28,18 +28,16 @@
       cursor: pointer;
       flex-direction: column;
     }
-    #splash-screen h1 {
-      margin: 0;
-      text-align: center;
-    }
     #splash-screen .powered-by {
       position: absolute;
       top: 10%;
       left: 5%;
       font-size: 12px;
+      text-align: left;
     }
-    #splash-screen .real {
+    #splash-screen .real-holo-plate {
       margin-top: 10%;
+      text-align: center;
     }
     #splash-screen .holo {
       color: blue;
@@ -52,25 +50,21 @@
       bottom: 25%;
       width: 100%;
     }
-    /* Hide AR.js debug messages */
-    .arjs-loader, .a-enter-vr, .a-enter-ar, .a-hidden {
-      display: none !important;
-    }
   </style>
 </head>
 <body>
   <!-- Splash screen with title and start prompt -->
   <div id="splash-screen" onclick="enterFullScreen()">
-    <div>
-      <p class="powered-by">Powered by</p>
-      <h1 class="real">REAL</h1>
+    <div class="powered-by">Powered by</div>
+    <div class="real-holo-plate">
+      <h1>REAL</h1>
       <h1><span class="holo">HOLO</span>-Plate</h1>
     </div>
     <p>Tap anywhere to start</p>
   </div>
 
   <!-- AR.js scene setup -->
-  <a-scene embedded arjs vr-mode-ui="enabled: false">
+  <a-scene embedded arjs="debugUIEnabled: false;">
     <a-marker preset='hiro'>
       <a-entity gltf-model="url(assets/bowl.glb)" scale="8 8 8"></a-entity>
     </a-marker>
