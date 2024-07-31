@@ -2,6 +2,8 @@
 <html>
 <head>
   <title>AR.js with 3D Model</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.7/aframe/build/aframe-ar.js"></script>
   <style>
@@ -34,13 +36,13 @@
     }
     #splash-screen .powered-by {
       position: absolute;
-      top: 10%;
+      top: 5%;
       left: 5%;
       font-size: 12px;
       text-align: left;
     }
     #splash-screen .real-holo-plate {
-      margin-top: 5%;
+      margin-top: 10px;
       text-align: center;
     }
     #splash-screen .holo {
@@ -57,6 +59,19 @@
     /* Hide AR.js debug messages */
     .arjs-loader, .a-enter-vr, .a-enter-ar, .a-hidden, #arjsDebugUIContainer {
       display: none !important;
+    }
+    /* Exit full-screen button styles */
+    #exit-fullscreen {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      display: none;
+      cursor: pointer;
+      z-index: 9999;
     }
   </style>
 </head>
@@ -79,8 +94,11 @@
     <a-entity camera></a-entity>
   </a-scene>
 
+  <!-- Exit full-screen button -->
+  <div id="exit-fullscreen" onclick="exitFullScreen()">Exit Full Screen</div>
+
   <script>
-    // Function to request full-screen mode
+    // Function to request full-screen mode and hide iOS toolbar
     function enterFullScreen() {
       const docEl = document.documentElement;
       if (docEl.requestFullscreen) {
@@ -92,14 +110,44 @@
       } else if (docEl.msRequestFullscreen) { // IE/Edge
         docEl.msRequestFullscreen();
       }
-      // Hide splash screen after entering full-screen mode
+      // Hide splash screen and show exit full-screen button after entering full-screen mode
       document.getElementById('splash-screen').style.display = 'none';
+      document.getElementById('exit-fullscreen').style.display = 'block';
+    }
+
+    // Function to exit full-screen mode
+    function exitFullScreen() {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.mozCancelFullScreen) { // Firefox
+        document.mozCancelFullScreen();
+      } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) { // IE/Edge
+        document.msExitFullscreen();
+      }
+      // Hide exit full-screen button after exiting full-screen mode
+      document.getElementById('exit-fullscreen').style.display = 'none';
     }
 
     // Event listener to enter full-screen mode when the user clicks the splash screen
     document.getElementById('splash-screen').addEventListener('click', function () {
       if (!document.fullscreenElement) {
         enterFullScreen();
+      }
+    });
+
+    // Hides the toolbar on iOS when the user scrolls
+    window.addEventListener("load", function() {
+      setTimeout(function() {
+        window.scrollTo(0, 1);
+      }, 0);
+    });
+
+    // Detect full-screen changes to show/hide the exit button
+    document.addEventListener('fullscreenchange', (event) => {
+      if (!document.fullscreenElement) {
+        document.getElementById('exit-fullscreen').style.display = 'none';
       }
     });
   </script>
