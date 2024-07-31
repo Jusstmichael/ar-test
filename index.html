@@ -32,10 +32,10 @@
       margin: 0;
       text-align: center;
     }
-    #splash-screen h1:nth-child(1) {
-      margin-top: 30%;
+    #splash-screen .real {
+      margin-top: 20%;
     }
-    #splash-screen h1:nth-child(2) {
+    #splash-screen .holo {
       color: blue;
     }
     #splash-screen p {
@@ -47,7 +47,7 @@
       width: 100%;
     }
     /* Hide AR.js debug messages */
-    .arjs-loader {
+    .arjs-loader, .a-enter-vr, .a-enter-ar {
       display: none !important;
     }
   </style>
@@ -56,8 +56,8 @@
   <!-- Splash screen with title and start prompt -->
   <div id="splash-screen" onclick="enterFullScreen()">
     <div>
-      <h1>REAL</h1>
-      <h1>HOLO-Plate</h1>
+      <h1 class="real">REAL</h1>
+      <h1> <span class="holo">HOLO</span>-Plate</h1>
     </div>
     <p>Tap anywhere to start</p>
   </div>
