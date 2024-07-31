@@ -8,6 +8,7 @@
     body {
       margin: 0;
       overflow: hidden;
+      background-color: black;
     }
   </style>
 </head>
@@ -33,15 +34,16 @@
       }
     }
 
-    // Request full-screen mode when the page loads
-    window.onload = enterFullScreen;
-
-    // Enter full-screen when user interacts with the page
-    document.addEventListener('click', function () {
+    // Request full-screen mode when device orientation changes
+    function handleOrientation(event) {
       if (!document.fullscreenElement) {
         enterFullScreen();
+        window.removeEventListener('deviceorientation', handleOrientation);
       }
-    });
+    }
+
+    // Add event listener for device orientation
+    window.addEventListener('deviceorientation', handleOrientation);
   </script>
 </body>
 </html>
