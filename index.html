@@ -30,13 +30,12 @@
     }
     #splash-screen .powered-by {
       position: absolute;
-      top: 10%;
-      left: 5%;
-      font-size: 12px;
+      top: 30%;
       text-align: left;
+      width: 100%;
+      font-size: 12px;
     }
     #splash-screen .real-holo-plate {
-      margin-top: 10%;
       text-align: center;
     }
     #splash-screen .holo {
@@ -64,7 +63,7 @@
   </div>
 
   <!-- AR.js scene setup -->
-  <a-scene embedded arjs="debugUIEnabled: false;">
+  <a-scene embedded arjs="debugUIEnabled: false;" vr-mode-ui="enabled: false">
     <a-marker preset='hiro'>
       <a-entity gltf-model="url(assets/bowl.glb)" scale="8 8 8"></a-entity>
     </a-marker>
