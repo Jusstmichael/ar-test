@@ -7,7 +7,7 @@
   <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.7/aframe/build/aframe-ar.js"></script>
 </head>
 
-<body style='margin : 0px; overflow: hidden;'>
+<body style='margin: 0; overflow: hidden;' onload="enterFullScreen();">
   <a-scene embedded arjs>
     <a-marker preset='hiro'>
       <a-entity gltf-model="url(assets/bowl.glb)" scale="8 8 8"></a-entity>
@@ -16,18 +16,18 @@
   </a-scene>
   
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    function enterFullScreen() {
       var scene = document.querySelector('a-scene');
-      if (scene && scene.requestFullscreen) {
+      if (scene.requestFullscreen) {
         scene.requestFullscreen();
-      } else if (scene && scene.mozRequestFullScreen) { // Firefox
+      } else if (scene.mozRequestFullScreen) { // Firefox
         scene.mozRequestFullScreen();
-      } else if (scene && scene.webkitRequestFullscreen) { // Chrome, Safari and Opera
+      } else if (scene.webkitRequestFullscreen) { // Chrome, Safari and Opera
         scene.webkitRequestFullscreen();
-      } else if (scene && scene.msRequestFullscreen) { // IE/Edge
+      } else if (scene.msRequestFullscreen) { // IE/Edge
         scene.msRequestFullscreen();
       }
-    });
+    }
   </script>
 </body>
 </html>
