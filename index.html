@@ -10,17 +10,50 @@
       overflow: hidden;
       background-color: black;
     }
+    #splash-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+      font-size: 24px;
+      z-index: 9999;
+      cursor: pointer;
+      flex-direction: column;
+    }
+    #splash-screen h1 {
+      margin: 0;
+      text-align: center;
+    }
+    #splash-screen p {
+      margin-top: 20px;
+      font-size: 18px;
+    }
   </style>
 </head>
 <body>
+  <div id="splash-screen" onclick="enterFullScreen()">
+    <div>
+      <h1>REAL</h1>
+      <h1>HOLO Plate</h1>
+      <p>Tap anywhere to start</p>
+    </div>
+  </div>
+
   <a-scene embedded arjs vr-mode-ui="enabled: false">
     <a-marker preset='hiro'>
       <a-entity gltf-model="url(assets/bowl.glb)" scale="8 8 8"></a-entity>
     </a-marker>
     <a-entity camera></a-entity>
   </a-scene>
+
   <script>
-    // Function to request full-screen mode
     function enterFullScreen() {
       const docEl = document.documentElement;
       if (docEl.requestFullscreen) {
@@ -32,18 +65,8 @@
       } else if (docEl.msRequestFullscreen) { // IE/Edge
         docEl.msRequestFullscreen();
       }
+      document.getElementById('splash-screen').style.display = 'none';
     }
-
-    // Request full-screen mode when device orientation changes
-    function handleOrientation(event) {
-      if (!document.fullscreenElement) {
-        enterFullScreen();
-        window.removeEventListener('deviceorientation', handleOrientation);
-      }
-    }
-
-    // Add event listener for device orientation
-    window.addEventListener('deviceorientation', handleOrientation);
   </script>
 </body>
 </html>
